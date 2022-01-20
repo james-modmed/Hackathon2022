@@ -7,6 +7,11 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PatientTrackingBoardDB", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PatientTrackingBoardApp", "PatientTrackingBoardApp\PatientTrackingBoardApp.csproj", "{DB483B67-C4EB-4560-9FD3-FEDFD08D8DC2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{E4C862F8-E08F-43B2-AAA3-BA6D1D55F11B}"
+	ProjectSection(SolutionItems) = preProject
+		CreateAllDummyData.sql = CreateAllDummyData.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -6,7 +6,9 @@
     [SourceId]     VARCHAR (128)    NULL,
     [DateCreated]  DATETIME         CONSTRAINT [DF__Patient__DateCreated] DEFAULT (getdate()) NOT NULL,
     [DateModified] DATETIME         NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    CONSTRAINT [PK__Patient] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
 
 

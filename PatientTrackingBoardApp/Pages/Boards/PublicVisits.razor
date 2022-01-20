@@ -1,0 +1,41 @@
+﻿@page "/Boards/PublicVisits/{locationId}"
+@inject Services.Board.BoardService BoardService
+    <h1>Visits For @GetLocationName()</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Physician</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var visit in visits)
+            {
+                <tr>
+                    <td>@visit.Patient.FirstName </td>
+                    <td>@visit.VisitName</td>
+                    <td>@visit.LastStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+@code {
+    [Parameter]
+    public string LocationId { get; set; }
+
+
+    private List<Data.Tracking.Visit> visits;
+
+    protected string GetLocationName()
+    {
+        return LocationId;
+    }
+
+        protected override void OnInitialized()
+        {
+            visits = BoardService.GetVisits(LocationId);
+        }
+}

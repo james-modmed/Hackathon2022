@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PatientTrackingBoardApp.Data;
-using Patient = PatientTrackingBoardApp.Data.Tracking.Patient;
-using Provider = PatientTrackingBoardApp.Data.Tracking.Provider;
-using Visit = PatientTrackingBoardApp.Data.Tracking.Visit;
+using PatientTrackingBoardApp.Data.Tracking;
 
 namespace PatientTrackingBoardApp.Services.Board
 {
@@ -16,22 +15,24 @@ namespace PatientTrackingBoardApp.Services.Board
             _dbContext = dbContext;
         }
 
-        public List<Visit> GetVisits(string locationId)
+        public List<VisitModel> GetVisits(Guid locationId)
         {
-            return _dbContext.Visits.Select(p => new Visit
+            return _dbContext.Visits.Select(p => new VisitModel
             {
-                Patient = new Patient
+                Patient = new PatientModel
                 {
                     FirstName = p.Patient.FirstName,
                     LastName = p.Patient.LastName
                 },
-                CurrentPhysician = new Provider
+                CurrentPhysician = new ProviderModel
                 {
                     FirstName = p.Provider.FirstName,
-                    LastName = p.Provider.LastName
+                    LastName = p.Provider.LastName,
+                    DisplayName = p.Provider.DisplayName
                 },
+                VisitDate = p.VisitDate,
                 VisitName = p.Id.ToString(),
-                VisitStatus = p.VisitStatuses.FirstOrDefault(j => j.Id == p.VisitStatusId).VisitCode.Name,
+                VisitStatus = "", //todo: Ask robert where our visit status is
                 LastStatus = p.DateModified
             }).ToList();
         }

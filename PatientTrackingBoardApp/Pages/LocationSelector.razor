@@ -15,14 +15,14 @@
 @code {
     [Parameter]
     public Guid? OrgId { get; set; }
-    internal string selectedLocationId;
-    internal List<PatientTrackingBoardApp.Data.Tracking.Location> Locations;
+    internal Guid? selectedLocationId;
+    internal List<PatientTrackingBoardApp.Data.Tracking.LocationModel> Locations;
 
     protected override void OnInitialized()
     {
 
-        Locations = LocationServices.GetLocations(OrgId ?? Guid.Empty);
-        selectedLocationId = Locations.FirstOrDefault()?.Id.ToString();
+        Locations = LocationServices.GetLocations(OrgId ?? new Guid("7E217857-1CCE-4268-98A2-B30C8D478EE0"));
+        selectedLocationId = Locations.FirstOrDefault()?.Id;
     }
 
     void Navigate()

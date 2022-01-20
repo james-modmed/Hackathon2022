@@ -1,36 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using PatientTrackingBoardApp.Data;
+using PatientTrackingBoardApp.Data.Tracking;
 
 namespace PatientTrackingBoardApp.Services.Location
 {
     public class LocationService
     {
-        private static List<PatientTrackingBoardApp.Data.Tracking.Location> Locs =  new List<Data.Tracking.Location>
-            {
-                new Data.Tracking.Location{
-                        Id = Guid.NewGuid(),
-                        Name = "Main Office"
-                    },
-                new Data.Tracking.Location{
-                        Id = Guid.NewGuid(),
-                        Name = "Ambulatory Surgical Center"
-                    },
-                new Data.Tracking.Location{
-                        Id = Guid.NewGuid(),
-                        Name = "Lab"
-                    },
-            };
+        private readonly PatientTrackingBoardDBContext _dbContext;
 
-        public List<PatientTrackingBoardApp.Data.Tracking.Location> GetLocations(Guid orgId)
+        public LocationService(PatientTrackingBoardDBContext dbContext)
         {
-            return Locs;
+            _dbContext = dbContext;
         }
 
-        public Data.Tracking.Location Read(Guid locationId)
+        public List<LocationModel> GetLocations(Guid orgId)
         {
-            return Locs.FirstOrDefault(l => l.Id == locationId);
+            return _dbContext.Locations.Where(p => p.OrganizationId == orgId).Select(p => new LocationModel
+            {
+                Name = p.Name,
+                Id = p.Id
+            }).ToList();
+        }
+
+        public LocationModel Read(Guid locationId)
+        {
+            return _dbContext.Locations.Where(p => p.Id == locationId).Select(p => new LocationModel
+            {
+                Name = p.Name,
+                Id = p.Id
+            }).FirstOrDefault();
         }
     }
 }

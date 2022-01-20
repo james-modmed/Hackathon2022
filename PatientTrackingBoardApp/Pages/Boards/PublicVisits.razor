@@ -8,6 +8,7 @@
         <tr>
             <th>Patient</th>
             <th>Physician</th>
+            <th>Appointment Time</th>
             <th>Status</th>
         </tr>
     </thead>
@@ -16,8 +17,9 @@
         {
             <tr>
                 <td>@visit.Patient.FirstName </td>
-                <td>@visit.VisitName</td>
-                <td>@visit.LastStatus</td>
+                <td>@visit.CurrentPhysician.DisplayName</td>
+                <td>@visit.VisitDate</td>
+                <td>@visit.VisitStatus</td>
             </tr>
         }
     </tbody>
@@ -28,15 +30,15 @@
     public string LocationId { get; set; }
 
 
-    private List<Data.Tracking.Visit> visits;
+    private List<Data.Tracking.VisitModel> visits;
 
     protected string GetLocationName()
     {
-        return LocationService.Read(Guid.Parse(LocationId)).Name;
+        return LocationService.Read(new Guid(LocationId)).Name;
     }
 
     protected override void OnInitialized()
     {
-        visits = BoardService.GetVisits(LocationId);
+        visits = BoardService.GetVisits(new Guid(LocationId));
     }
 }

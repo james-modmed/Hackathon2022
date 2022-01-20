@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using PatientTrackingBoardApp.Data;
 using PatientTrackingBoardApp.Data.Tracking;
-using Visit = PatientTrackingBoardApp.Data.Tracking.Visit;
-using Patient = PatientTrackingBoardApp.Data.Tracking.Patient;
-using Provider = PatientTrackingBoardApp.Data.Tracking.Provider;
+using PatientTrackingBoardApp.Services.Board;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,73 +12,23 @@ namespace PatientTrackingBoardApp.Controllers
     [ApiController]
     public class BoardController : ControllerBase
     {
-        private readonly PatientTrackingBoardDBContext _dbContext;
+        private readonly BoardService _boardService;
 
-        public BoardController(PatientTrackingBoardDBContext dbContext)
+        public BoardController(BoardService boardService)
         {
-            _dbContext = dbContext;
+            _boardService = boardService;
         }
 
-        // GET: api/<ValuesController>
         [HttpGet("InternalBoard")]
-        public IEnumerable<Visit> GetInternalBoard(Guid locationId)
+        public IEnumerable<VisitModel> GetInternalBoard(Guid locationId)
         {
-            return _dbContext.Visits.Select(p => new Visit
-            {
-                Patient = new Patient
-                {
-                    FirstName = p.Patient.FirstName,
-                    LastName = p.Patient.LastName
-                },
-                CurrentPhysician = new Provider
-                {
-                    FirstName = p.Provider.FirstName,
-                    LastName = p.Provider.LastName
-                },
-            });
+            return _boardService.GetVisits(locationId);
         }
 
         [HttpGet("ExternalBoard")]
-        public IEnumerable<Visit> GetExternalBoard(Guid locationId)
+        public IEnumerable<VisitModel> GetExternalBoard(Guid locationId)
         {
-            return _dbContext.Visits.Select(p => new Visit
-            {
-                Patient = new Patient
-                {
-                    FirstName = p.Patient.FirstName,
-                    LastName = p.Patient.LastName
-                },
-                CurrentPhysician = new Provider
-                {
-                    FirstName = p.Provider.FirstName,
-                    LastName = p.Provider.LastName
-                },
-            });
-        }
-
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ValuesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return _boardService.GetVisits(locationId);
         }
     }
 }

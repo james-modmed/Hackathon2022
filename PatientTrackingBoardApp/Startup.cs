@@ -10,10 +10,6 @@ using PatientTrackingBoardApp.Areas.Identity;
 using PatientTrackingBoardApp.Data;
 using PatientTrackingBoardApp.Services.Board;
 using PatientTrackingBoardApp.Services.Location;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PatientTrackingBoardApp
 {
@@ -30,9 +26,7 @@ namespace PatientTrackingBoardApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PatientTrackingBoardDBContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<PatientTrackingBoardDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<PatientTrackingBoardDBContext>();
             services.AddMvc(o => o.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
@@ -40,9 +34,8 @@ namespace PatientTrackingBoardApp
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<BoardService>();
-            services.AddSingleton<LocationService>();
+            services.AddScoped<BoardService>();
+            services.AddScoped<LocationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[VisitCode]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [name] VARCHAR(128) NOT NULL, 
+    [ColorCode] VARCHAR(128) NOT NULL
+)

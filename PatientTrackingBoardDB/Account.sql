@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Account]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [OrganizationId] UNIQUEIDENTIFIER NOT NULL
+)

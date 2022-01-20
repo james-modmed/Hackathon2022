@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Location]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [OrganizationId] UNIQUEIDENTIFIER NOT NULL, 
+    [Name] VARCHAR(128) NOT NULL
+)

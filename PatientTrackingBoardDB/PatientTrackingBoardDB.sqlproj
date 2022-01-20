@@ -57,4 +57,17 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Patient.sql" />
+    <Build Include="Provider.sql" />
+    <Build Include="Visit.sql" />
+    <Build Include="VisitCode.sql" />
+    <Build Include="VisitStatus.sql" />
+    <Build Include="Organization.sql" />
+    <Build Include="Location.sql" />
+    <Build Include="Account.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="PatientTrackingBoardDB.refactorlog" />
+  </ItemGroup>
 </Project>

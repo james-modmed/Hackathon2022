@@ -1,0 +1,32 @@
+﻿@page "/{orgId}"
+<h3>Please select a Location</h3>
+@inject Services.Location.LocationService LocationServices
+@inject NavigationManager UriHelper
+<select class="form-control custom-select"  @bind="@selectedLocationId">
+    @foreach (var location in Locations)
+    {
+        <option value="@location.Id">@location.Name</option>
+    }
+</select>
+
+
+<button class="btn btn-primary" @onclick="Navigate">Go</button>
+
+@code {
+    [Parameter]
+    public Guid? OrgId { get; set; }
+    internal string selectedLocationId;
+    internal List<PatientTrackingBoardApp.Data.Tracking.Location> Locations;
+
+    protected override void OnInitialized()
+    {
+
+        Locations = LocationServices.GetLocations(OrgId ?? Guid.Empty);
+        selectedLocationId = Locations.FirstOrDefault()?.Id.ToString();
+    }
+
+    void Navigate()
+    {
+        UriHelper.NavigateTo($"/Boards/PublicVisits/{selectedLocationId}");
+    }
+}

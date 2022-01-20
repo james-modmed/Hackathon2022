@@ -1,26 +1,27 @@
 ﻿@page "/Boards/PublicVisits/{locationId}"
 @inject Services.Board.BoardService BoardService
-    <h1>Visits For @GetLocationName()</h1>
+@inject Services.Location.LocationService  LocationService
+<h1>Visits For @GetLocationName()</h1>
 
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Physician</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var visit in visits)
+        {
             <tr>
-                <th>Patient</th>
-                <th>Physician</th>
-                <th>Status</th>
+                <td>@visit.Patient.FirstName </td>
+                <td>@visit.VisitName</td>
+                <td>@visit.LastStatus</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var visit in visits)
-            {
-                <tr>
-                    <td>@visit.Patient.FirstName </td>
-                    <td>@visit.VisitName</td>
-                    <td>@visit.LastStatus</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 @code {
     [Parameter]
@@ -31,11 +32,11 @@
 
     protected string GetLocationName()
     {
-        return LocationId;
+        return LocationService.Read(Guid.Parse(LocationId)).Name;
     }
 
-        protected override void OnInitialized()
-        {
-            visits = BoardService.GetVisits(LocationId);
-        }
+    protected override void OnInitialized()
+    {
+        visits = BoardService.GetVisits(LocationId);
+    }
 }

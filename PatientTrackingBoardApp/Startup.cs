@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using PatientTrackingBoardApp.Areas.Identity;
 using PatientTrackingBoardApp.Data;
 using PatientTrackingBoardApp.Services.Board;
+using PatientTrackingBoardApp.Services.Location;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,7 @@ namespace PatientTrackingBoardApp
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<BoardService>();
+            services.AddSingleton<LocationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

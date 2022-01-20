@@ -3,24 +3,26 @@
 @inject Services.Location.LocationService  LocationService
 <h1>Visits For @GetLocationName()</h1>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-hover"  data-toggle="table">
+    <thead class="thead-light">
         <tr>
-            <th>Patient</th>
-            <th>Physician</th>
-            <th>Appointment Time</th>
-            <th>Status</th>
+            <th scope="col">Patient</th>
+            <th scope="col">Physician</th>
+            <th scope="col">Procedure</th>
+            <th scope="col">Status</th>
+            <th scope="col">Last Update</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var visit in visits)
         {
-            <tr>
-                <td>@visit.Patient.FirstName </td>
-                <td>@visit.CurrentPhysician.DisplayName</td>
-                <td>@visit.VisitDate</td>
-                <td>@visit.VisitStatus</td>
-            </tr>
+        <tr>
+            <td>@visit.Patient.MaskedName </td>
+            <td>@visit.CurrentPhysician.DisplayName</td>
+            <td>@visit.VisitName</td>
+            <td>@visit.VisitStatus</td>
+            <td>@visit.LastStatus.ToShortTimeString()</td>
+        </tr>
         }
     </tbody>
 </table>

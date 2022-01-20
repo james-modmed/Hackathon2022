@@ -4,6 +4,7 @@ namespace PatientTrackingBoardApp.Data.Tracking
 {
     public class VisitModel
     {
+        public Guid Id {get; set;}
         public PatientModel Patient { get; set;}
         public ProviderModel CurrentPhysician {get; set; }
 

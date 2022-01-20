@@ -19,6 +19,7 @@ namespace PatientTrackingBoardApp.Services.Board
         {
             return _dbContext.Visits.Select(p => new VisitModel
             {
+                Id = p.Id,
                 Patient = new PatientModel
                 {
                     FirstName = p.Patient.FirstName,
@@ -31,7 +32,7 @@ namespace PatientTrackingBoardApp.Services.Board
                     DisplayName = p.Provider.DisplayName
                 },
                 VisitDate = p.VisitDate,
-                VisitName = p.Id.ToString(),
+                VisitName = p.Procedure.ToString(),
                 VisitStatus = "", //todo: Ask robert where our visit status is
                 LastStatus = p.DateModified
             }).ToList();

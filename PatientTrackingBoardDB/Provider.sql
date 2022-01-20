@@ -1,7 +1,11 @@
-﻿CREATE TABLE [dbo].[Provider]
-(
-	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [FirstName] VARCHAR(128) NOT NULL, 
-    [LastName] VARCHAR(128) NOT NULL, 
-    [DisplayName] VARCHAR(128) NOT NULL
-)
+﻿CREATE TABLE [dbo].[Provider] (
+    [Id]           UNIQUEIDENTIFIER NOT NULL,
+    [FirstName]    VARCHAR (128)    NOT NULL,
+    [LastName]     VARCHAR (128)    NOT NULL,
+    [DisplayName]  VARCHAR (128)    NOT NULL,
+    [DateCreated]  DATETIME         CONSTRAINT [DF__Provider__DateCreated] DEFAULT (getdate()) NOT NULL,
+    [DateModified] DATETIME         NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+

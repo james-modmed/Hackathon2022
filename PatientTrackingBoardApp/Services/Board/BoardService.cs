@@ -1,21 +1,39 @@
-﻿using PatientTrackingBoardApp.Data.Tracking;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using PatientTrackingBoardApp.Data;
+using Patient = PatientTrackingBoardApp.Data.Tracking.Patient;
+using Provider = PatientTrackingBoardApp.Data.Tracking.Provider;
+using Visit = PatientTrackingBoardApp.Data.Tracking.Visit;
 
 namespace PatientTrackingBoardApp.Services.Board
 {
     public class BoardService
     {
+        private readonly PatientTrackingBoardDBContext _dbContext;
+
+        public BoardService(PatientTrackingBoardDBContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public List<Visit> GetVisits(string locationId)
         {
-            return new List<Visit>
+            return _dbContext.Visits.Select(p => new Visit
             {
-                new Visit{ Patient = new Patient{ FirstName ="John", LastName = "Doe"}, CurrentPhysician = new Provider{ DisplayName = "Dr John Smith MD"}, VisitName = "Consultation", VisitStatus="Arrived", LastStatus= new DateTime(2022, 01, 20, 14, 31, 00)   },
-                new Visit{ Patient = new Patient{ FirstName ="Jane", LastName = "Jones"}, CurrentPhysician = new Provider{ DisplayName = "Dr Frank Adam MD"}, VisitName = "Colonoscopy", VisitStatus="PreOperative", LastStatus= new DateTime(2022, 01, 20, 16, 22, 00)  },
-                new Visit{ Patient = new Patient{ FirstName ="Mary", LastName = "Sue"}, CurrentPhysician = new Provider{ DisplayName = "Dr John Smith MD"}, VisitName = "Consultation", VisitStatus="Arrived", LastStatus= new DateTime(2022, 01, 20, 12, 31, 00)  },
-            };
+                Patient = new Patient
+                {
+                    FirstName = p.Patient.FirstName,
+                    LastName = p.Patient.LastName
+                },
+                CurrentPhysician = new Provider
+                {
+                    FirstName = p.Provider.FirstName,
+                    LastName = p.Provider.LastName
+                },
+                VisitName = p.Id.ToString(),
+                VisitStatus = p.VisitStatuses.FirstOrDefault(j => j.Id == p.VisitStatusId).VisitCode.Name,
+                LastStatus = p.DateModified
+            }).ToList();
         }
     }
 }

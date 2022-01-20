@@ -3,6 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PatientTrackingBoardApp.Data;
+using PatientTrackingBoardApp.Data.Tracking;
+using Visit = PatientTrackingBoardApp.Data.Tracking.Visit;
+using Patient = PatientTrackingBoardApp.Data.Tracking.Patient;
+using Provider = PatientTrackingBoardApp.Data.Tracking.Provider;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,11 +17,48 @@ namespace PatientTrackingBoardApp.Controllers
     [ApiController]
     public class BoardController : ControllerBase
     {
-        // GET: api/<ValuesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly PatientTrackingBoardDBContext _dbContext;
+
+        public BoardController(PatientTrackingBoardDBContext dbContext)
         {
-            return new string[] { "value1", "value2" };
+            _dbContext = dbContext;
+        }
+
+        // GET: api/<ValuesController>
+        [HttpGet("InternalBoard")]
+        public IEnumerable<Visit> GetInternalBoard(Guid locationId)
+        {
+            return _dbContext.Visits.Select(p => new Visit
+            {
+                Patient = new Patient
+                {
+                    FirstName = p.Patient.FirstName,
+                    LastName = p.Patient.LastName
+                },
+                CurrentPhysician = new Provider
+                {
+                    FirstName = p.Provider.FirstName,
+                    LastName = p.Provider.LastName
+                },
+            });
+        }
+
+        [HttpGet("ExternalBoard")]
+        public IEnumerable<Visit> GetExternalBoard(Guid locationId)
+        {
+            return _dbContext.Visits.Select(p => new Visit
+            {
+                Patient = new Patient
+                {
+                    FirstName = p.Patient.FirstName,
+                    LastName = p.Patient.LastName
+                },
+                CurrentPhysician = new Provider
+                {
+                    FirstName = p.Provider.FirstName,
+                    LastName = p.Provider.LastName
+                },
+            });
         }
 
         // GET api/<ValuesController>/5

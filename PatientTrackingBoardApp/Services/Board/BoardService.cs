@@ -1,8 +1,8 @@
-﻿using System;
+﻿using PatientTrackingBoardApp.Data;
+using PatientTrackingBoardApp.Data.Tracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PatientTrackingBoardApp.Data;
-using PatientTrackingBoardApp.Data.Tracking;
 
 namespace PatientTrackingBoardApp.Services.Board
 {
@@ -33,8 +33,8 @@ namespace PatientTrackingBoardApp.Services.Board
                 },
                 VisitDate = p.VisitDate,
                 VisitName = p.Procedure.ToString(),
-                VisitStatus = p.VisitStatuses.OrderByDescending(j => j.DateModified).Select(s => new VisitCodeModel{ Id=s.VisitCode.Id, Name = s.VisitCode.Name, SortOrder = s.VisitCode.SortOrder }).FirstOrDefault(),
-                LastStatus = p.DateModified
+                VisitStatus = p.VisitStatuses.OrderByDescending(j => j.DateModified).Select(s => new VisitCodeModel { Id = s.VisitCode.Id, Name = s.VisitCode.Name, SortOrder = s.VisitCode.SortOrder }).FirstOrDefault(),
+                LastStatus = p.VisitStatuses.OrderByDescending(j => j.DateModified).Select(s => s.DateModified).FirstOrDefault()
             }).ToList();
         }
     }

@@ -33,7 +33,7 @@ namespace PatientTrackingBoardApp.Services.Board
                 },
                 VisitDate = p.VisitDate,
                 VisitName = p.Procedure.ToString(),
-                VisitStatus = "", //todo: Ask robert where our visit status is
+                VisitStatus = p.VisitStatuses.OrderByDescending(j => j.DateModified).FirstOrDefault().VisitCode.Name,
                 LastStatus = p.DateModified
             }).ToList();
         }

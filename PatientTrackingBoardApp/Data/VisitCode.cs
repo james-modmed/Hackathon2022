@@ -17,6 +17,7 @@ namespace PatientTrackingBoardApp.Data
         public string ColorCode { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
+        public int SortOrder { get; set; }
 
         public virtual ICollection<VisitStatus> VisitStatuses { get; set; }
     }

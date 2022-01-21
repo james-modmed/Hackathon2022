@@ -140,13 +140,15 @@ INSERT INTO [dbo].[VisitCode]
            ,[name]
            ,[ColorCode]
            ,[DateCreated]
-           ,[DateModified])
+           ,[DateModified]
+		   ,[SortOrder])
  
 SELECT NEWID(),
       'Intake', 
 	  '#CCCC00',
 	   GETDATE(),
-	   GETDATE()
+	   GETDATE(),
+	   10
 
 UNION
 
@@ -154,7 +156,8 @@ SELECT NEWID(),
       'PreOp', 
 	  '#00CCCC',
 	   GETDATE(),
-	   GETDATE()
+	   GETDATE(),
+	   20
 
 UNION
 
@@ -162,7 +165,8 @@ SELECT NEWID(),
       'InOR', 
 	  '#000000',
 	   GETDATE(),
-	   GETDATE()
+	   GETDATE(),
+	   30
 
 UNION
 
@@ -170,7 +174,8 @@ SELECT NEWID(),
       'Recovery', 
 	  '#009900',
 	   GETDATE(),
-	   GETDATE()
+	   GETDATE(),
+	   40
 
 UNION
 
@@ -178,7 +183,8 @@ SELECT NEWID(),
       'Ready for Family', 
 	  '#00FF00',
 	   GETDATE(),
-	   GETDATE()
+	   GETDATE(),
+	   50
 GO
 
 USE [PatientTrackingBoardDB]
@@ -267,7 +273,7 @@ INSERT INTO [dbo].[Organization]
 		   ,[Name]
            ,[DateCreated]
            ,[DateModified])
-SELECT NEWID()
+SELECT '63E5D164-1202-4229-A34B-7E6689671E40'
      , 'Modernizing Medicine'
      , GETDATE()
 	 , GETDATE()

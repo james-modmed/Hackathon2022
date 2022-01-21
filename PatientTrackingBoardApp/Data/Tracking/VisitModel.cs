@@ -10,7 +10,7 @@ namespace PatientTrackingBoardApp.Data.Tracking
 
         public string VisitName {get; set; }
 
-        public string VisitStatus {get; set;}
+        public VisitCodeModel  VisitStatus {get; set;}
         public DateTime VisitDate { get; set; }
 
         public DateTime LastStatus {get;set;}

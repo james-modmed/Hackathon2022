@@ -33,7 +33,7 @@ namespace PatientTrackingBoardApp.Services.Board
                 },
                 VisitDate = p.VisitDate,
                 VisitName = p.Procedure.ToString(),
-                VisitStatus = p.VisitStatuses.OrderByDescending(j => j.DateModified).FirstOrDefault().VisitCode.Name,
+                VisitStatus = p.VisitStatuses.OrderByDescending(j => j.DateModified).Select(s => new VisitCodeModel{ Id=s.VisitCode.Id, Name = s.VisitCode.Name, SortOrder = s.VisitCode.SortOrder }).FirstOrDefault(),
                 LastStatus = p.DateModified
             }).ToList();
         }

@@ -1,6 +1,7 @@
 ﻿@page "/Boards/PublicVisits/{locationId}"
 @inject Services.Board.BoardService BoardService
 @inject Services.Location.LocationService  LocationService
+@inject Services.VisitCode.VisitCodeService VisitCodeService
 <h1>Visits For @GetLocationName()</h1>
 
 <table class="table table-striped table-hover"  data-toggle="table">
@@ -20,7 +21,22 @@
             <td>@visit.Patient.MaskedName </td>
             <td>@visit.CurrentPhysician.DisplayName</td>
             <td>@visit.VisitName</td>
-            <td>@visit.VisitStatus</td>
+            <td>
+                <ul class="progress-indicator">
+                    @foreach (var visitCode in visitCodes)
+                    {
+                        @if (visit.VisitStatus.SortOrder > visitCode.SortOrder)
+                        {
+                            <li class="completed"><span class="bubble"></span>@visitCode.Name</li>
+                        }
+                        else
+                        {
+                            <li><span class="bubble"></span>@visitCode.Name</li>
+                        }
+ 
+                    }
+                </ul>
+            </td>
             <td>@visit.LastStatus.ToShortTimeString()</td>
         </tr>
         }
@@ -34,6 +50,8 @@
 
     private List<Data.Tracking.VisitModel> visits;
 
+    private List<Data.Tracking.VisitCodeModel> visitCodes;
+
     protected string GetLocationName()
     {
         return LocationService.Read(new Guid(LocationId)).Name;
@@ -42,5 +60,6 @@
     protected override void OnInitialized()
     {
         visits = BoardService.GetVisits(new Guid(LocationId));
+        visitCodes = VisitCodeService.GetVisitCodes();
     }
 }

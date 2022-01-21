@@ -10,6 +10,7 @@ using PatientTrackingBoardApp.Areas.Identity;
 using PatientTrackingBoardApp.Data;
 using PatientTrackingBoardApp.Services.Board;
 using PatientTrackingBoardApp.Services.Location;
+using PatientTrackingBoardApp.Services.VisitCode;
 
 namespace PatientTrackingBoardApp
 {
@@ -36,6 +37,7 @@ namespace PatientTrackingBoardApp
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<BoardService>();
             services.AddScoped<LocationService>();
+            services.AddScoped<VisitCodeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

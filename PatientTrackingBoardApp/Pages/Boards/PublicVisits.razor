@@ -2,9 +2,11 @@
 @inject Services.Board.BoardService BoardService
 @inject Services.Location.LocationService  LocationService
 @inject Services.VisitCode.VisitCodeService VisitCodeService
+@inject IJSRuntime JS
+@using Utils.Extensions;
 <h1>Visits For @locationName</h1>
 
-<table class="table table-striped table-hover"  data-toggle="table">
+<table class="table table-striped table-hover" data-toggle="table">
     <thead class="thead-light">
         <tr>
             <th scope="col">Patient</th>
@@ -17,28 +19,28 @@
     <tbody>
         @foreach (var visit in visits)
         {
-        <tr>
-            <td>@visit.Patient.MaskedName </td>
-            <td>@visit.CurrentPhysician.DisplayName</td>
-            <td>@visit.VisitName</td>
-            <td>
-                <ul class="progress-indicator">
-                    @foreach (var visitCode in visitCodes)
-                    {
-                        @if (visit.VisitStatus.SortOrder >= visitCode.SortOrder)
+            <tr>
+                <td>@visit.Patient.MaskedName </td>
+                <td>@visit.CurrentPhysician.DisplayName</td>
+                <td>@visit.VisitName</td>
+                <td>
+                    <ul class="progress-indicator">
+                        @foreach (var visitCode in visitCodes)
                         {
-                            <li class="@GetStatusClass(visit, visitCode)"><span class="bubble"></span>@visitCode.Name</li>
+                            @if (visit.VisitStatus.SortOrder >= visitCode.SortOrder)
+                            {
+                                <li class="@GetStatusClass(visit, visitCode)"><span class="bubble"></span>@visitCode.Name</li>
+                            }
+                            else
+                            {
+                                <li><span class="bubble"></span>@visitCode.Name</li>
+                            }
+
                         }
-                        else
-                        {
-                            <li><span class="bubble"></span>@visitCode.Name</li>
-                        }
- 
-                    }
-                </ul>
-            </td>
-            <td>@visit.LastStatus.ToShortTimeString()</td>
-        </tr>
+                    </ul>
+                </td>
+                <td>@visit.LastStatus.ToShortTimeString()</td>
+            </tr>
         }
     </tbody>
 </table>
@@ -47,7 +49,7 @@
     [Parameter]
     public string LocationId { get; set; }
 
-    private string locationName {get; set;}
+    private string locationName { get; set; }
 
     private List<Data.Tracking.VisitModel> visits;
 
@@ -65,7 +67,8 @@
         locationName = GetLocationName();
         var timer = new System.Threading.Timer((_) =>
         {
-            InvokeAsync(async () => {
+            InvokeAsync(async () =>
+            {
                 visits = BoardService.GetVisits(new Guid(LocationId));
                 StateHasChanged();
             }
@@ -75,6 +78,6 @@
 
     private string GetStatusClass(Data.Tracking.VisitModel visit, Data.Tracking.VisitCodeModel visitCode)
     {
-        return (visit.VisitStatus.Id == visitCode.Id)? "active" : "completed";
+        return (visit.VisitStatus.Id == visitCode.Id) ? "active" : "completed";
     }
 }

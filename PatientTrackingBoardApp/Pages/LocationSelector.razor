@@ -1,23 +1,43 @@
 ﻿@page "/{orgId}"
-<h3>Please select a Location</h3>
+
 @inject Services.Location.LocationService LocationServices
 @inject NavigationManager UriHelper
-<select class="form-control custom-select"  @bind="@selectedLocationId">
-    @foreach (var location in Locations)
-    {
-        <option value="@location.Id">@location.Name</option>
-    }
-</select>
+@inject Services.Layout.ViewOptionService ViewOption
 
+<form >
+    <div class="row mb-3">
+        <label for="locationselect" class="col-sm-2 col-form-label">
+            Select Location
+        </label>
+        <div class="col-sm-10">
+            <select class="form-control custom-select" @bind="@selectedLocationId" id="locationselect">
+                @foreach (var location in Locations)
+                {
+                    <option value="@location.Id">@location.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="form-check">
+            <input type="checkbox" @bind="navBarVisible" id="chckVisible" />
+            <label class="form-check-label" for="chckVisible">
+                Full Screen
+            </label>
+        </div>
+    </div>
+        
+    
 
+</form>
 <button class="btn btn-primary" @onclick="Navigate">Go</button>
 
 @code {
-    [Parameter]
-    public Guid? OrgId { get; set; }
+        [Parameter]
+        public Guid? OrgId { get; set; }
     internal Guid? selectedLocationId;
     internal List<PatientTrackingBoardApp.Data.Tracking.LocationModel> Locations;
-
+    private bool navBarVisible {get; set;}
     protected override void OnInitialized()
     {
 
@@ -27,6 +47,8 @@
 
     void Navigate()
     {
+        ViewOption.NavBarVisible(!navBarVisible);
+        
         UriHelper.NavigateTo($"/Boards/PublicVisits/{selectedLocationId}");
     }
 }

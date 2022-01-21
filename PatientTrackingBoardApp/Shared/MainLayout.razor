@@ -1,12 +1,12 @@
 ﻿@inherits LayoutComponentBase
-
+@inject Services.Layout.ViewOptionService ViewOption
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar @ViewOption.NavBarClass">
         <NavMenu />
     </div>
 
     <div class="main">
-        <div class="top-row px-4 auth">
+        <div class="top-row px-4 auth @ViewOption.NavBarClass">
             <LoginDisplay />
             <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
         </div>
@@ -16,3 +16,14 @@
         </div>
     </div>
 </div>
+
+
+@code {      
+        protected override async Task OnInitializedAsync()
+        {
+            ViewOption.OnChanged = () =>
+            {
+                StateHasChanged();
+            };
+        }
+}

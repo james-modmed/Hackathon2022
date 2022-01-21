@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using PatientTrackingBoardApp.Areas.Identity;
 using PatientTrackingBoardApp.Data;
 using PatientTrackingBoardApp.Services.Board;
+using PatientTrackingBoardApp.Services.Layout;
 using PatientTrackingBoardApp.Services.Location;
 using PatientTrackingBoardApp.Services.VisitCode;
 using PatientTrackingBoardApp.Services.VisitStatus;
@@ -40,6 +41,7 @@ namespace PatientTrackingBoardApp
             services.AddScoped<LocationService>();
             services.AddScoped<VisitCodeService>();
             services.AddScoped<VisitStatusService>();
+            services.AddSingleton<ViewOptionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

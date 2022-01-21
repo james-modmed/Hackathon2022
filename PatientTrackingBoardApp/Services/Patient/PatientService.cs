@@ -1,28 +1,24 @@
 ﻿using PatientTrackingBoardApp.Data;
 using PatientTrackingBoardApp.Data.Tracking;
-using System;
-using System.Linq;
 
 namespace PatientTrackingBoardApp.Services.VisitStatus
 {
-    public class VisitStatusService
+    public class PatientService
     {
         private readonly PatientTrackingBoardDBContext _dbContext;
 
-        public VisitStatusService(PatientTrackingBoardDBContext dbContext)
+        public PatientService(PatientTrackingBoardDBContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public Data.VisitCode GetVisitCodeFromName(string name)
-        {
-            return _dbContext.VisitCodes.Where(c => c.Name == name).FirstOrDefault();
-        }
-
-        public Visit GetVisitFromPatientSourceIdAndVisitDate(string patientSourceId, DateTime visitDate)
-        {
-            return _dbContext.Visits.Where(v => v.Patient.SourceId == patientSourceId && v.VisitDate == visitDate).FirstOrDefault();
-        }
+        //public PatientModel InsertPatient(PatientModel model)
+        //{
+        //    var entityModel = new Data.Patient
+        //    {
+        //        Id = model.
+        //    }
+        //}
 
         public VisitStatusModel InsertVisitStatus(VisitStatusModel model)
         {

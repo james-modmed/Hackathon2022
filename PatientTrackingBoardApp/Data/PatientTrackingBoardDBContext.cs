@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace PatientTrackingBoardApp.Data
 {
-    public partial class PatientTrackingBoardDBContext : DbContext
+    public partial class PatientTrackingBoardDBContext : IdentityDbContext
     {
         public PatientTrackingBoardDBContext()
         {
@@ -29,11 +28,6 @@ namespace PatientTrackingBoardApp.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=PatientTrackingBoardDB;User Id=sa; Password=gmed;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -362,7 +356,7 @@ namespace PatientTrackingBoardApp.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VisitStatus_VisitId");
             });
-
+            base.OnModelCreating(modelBuilder);
             OnModelCreatingPartial(modelBuilder);
         }
 

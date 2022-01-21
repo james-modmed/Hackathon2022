@@ -11,6 +11,7 @@ using PatientTrackingBoardApp.Data;
 using PatientTrackingBoardApp.Services.Board;
 using PatientTrackingBoardApp.Services.Location;
 using PatientTrackingBoardApp.Services.VisitCode;
+using PatientTrackingBoardApp.Services.VisitStatus;
 
 namespace PatientTrackingBoardApp
 {
@@ -38,6 +39,7 @@ namespace PatientTrackingBoardApp
             services.AddScoped<BoardService>();
             services.AddScoped<LocationService>();
             services.AddScoped<VisitCodeService>();
+            services.AddScoped<VisitStatusService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

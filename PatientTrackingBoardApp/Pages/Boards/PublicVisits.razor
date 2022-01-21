@@ -25,9 +25,9 @@
                 <ul class="progress-indicator">
                     @foreach (var visitCode in visitCodes)
                     {
-                        @if (visit.VisitStatus.SortOrder > visitCode.SortOrder)
+                        @if (visit.VisitStatus.SortOrder >= visitCode.SortOrder)
                         {
-                            <li class="completed"><span class="bubble"></span>@visitCode.Name</li>
+                            <li class="@GetStatusClass(visit, visitCode)"><span class="bubble"></span>@visitCode.Name</li>
                         }
                         else
                         {
@@ -61,5 +61,10 @@
     {
         visits = BoardService.GetVisits(new Guid(LocationId));
         visitCodes = VisitCodeService.GetVisitCodes();
+    }
+
+    private string GetStatusClass(Data.Tracking.VisitModel visit, Data.Tracking.VisitCodeModel visitCode)
+    {
+        return (visit.VisitStatus.Id == visitCode.Id)? "active" : "completed";
     }
 }
